@@ -13,9 +13,9 @@ namespace tabuleiro
 
         //tabuleiro pode ter posicao, cor e quantidade de movimento
 
-        public Peca(Posicao posicao, Cor cor, Tabuleiro tab)
+        public Peca(Cor cor, Tabuleiro tab)
         {
-            this.posicao = posicao;
+            this.posicao = null;
             this.cor = cor;
             this.tab = tab;
             this.qteMovimentos = 0; // toda peça inicia com zero movimento
