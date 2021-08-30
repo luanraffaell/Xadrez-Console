@@ -20,5 +20,9 @@ namespace tabuleiro
             this.tab = tab;
             this.qteMovimentos = 0; // toda peça inicia com zero movimento
         }
+        public void IncrementarMov()
+        {
+            qteMovimentos++;
+        }
     }
 }

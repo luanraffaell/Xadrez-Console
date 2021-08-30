@@ -9,12 +9,14 @@ namespace tabuleiro
         public int linhas { get; set; }
         public int colunas { get; set; }
         private Peca[,] pecas;
+        public bool PartidaTerminada { get; set; }
 
         public Tabuleiro(int linhas, int colunas)
         {
             this.linhas = linhas;
             this.colunas = colunas;
             pecas = new Peca[linhas, colunas];
+            PartidaTerminada = false;
         }
         public Peca peca(int linha,int coluna)
         {
@@ -39,6 +41,17 @@ namespace tabuleiro
             p.posicao = pos;
         }
         //só posso colocar uma peça aonde não tenha uma peça
+        public Peca RemoverPeca(Posicao pos)
+        {
+            if (!ExistePeca(pos))
+            {
+                return null;
+            }
+            Peca p = peca(pos);
+            p.posicao = null;
+            pecas[pos.Linha, pos.Coluna] = null;
+            return p;
+        }
 
        
         //retorna true ou false para caso a posição for valida ou não ex matriz 0,1,2 seleciono posição com numero 3
