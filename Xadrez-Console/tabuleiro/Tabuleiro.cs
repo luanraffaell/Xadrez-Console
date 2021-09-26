@@ -9,14 +9,12 @@ namespace tabuleiro
         public int linhas { get; set; }
         public int colunas { get; set; }
         private Peca[,] pecas;
-        public bool PartidaTerminada { get; set; }
 
         public Tabuleiro(int linhas, int colunas)
         {
             this.linhas = linhas;
             this.colunas = colunas;
             pecas = new Peca[linhas, colunas];
-            PartidaTerminada = false;
         }
         public Peca peca(int linha,int coluna)
         {

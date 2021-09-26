@@ -10,6 +10,7 @@ namespace Xadrez
         public Tabuleiro tab { get; private set; }
         public Cor JogadorAtual { get; private set; }
         public int Turno { get; private set; }
+        public bool terminada { get; private set; }
         private HashSet<Peca> pecas;
         private HashSet<Peca> capturadas;
         public bool xeque { get; private set; }
@@ -17,11 +18,42 @@ namespace Xadrez
         public PartidaXadrez()
         {
             tab = new Tabuleiro(8, 8);
+            terminada = false;
             JogadorAtual = Cor.Branca;
             Turno = 1;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
             ColocarPecas();
+        }
+        public bool testeXequemate(Cor cor)
+        {
+            if (!estaEmCheque(cor))
+            {
+                return false;
+            }
+            foreach(Peca x in PecasEmJogo(cor))
+            {
+                bool[,] mat = x.MovimentosPossiveis();
+                for(int i = 0; i < tab.linhas; i++)
+                {
+                    for(int j=0; j < tab.colunas; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Posicao origem = x.posicao;
+                            Posicao destino = new Posicao(i, j);
+                            Peca capturada = MoverPecas(origem, destino);
+                            bool testeXeque = estaEmCheque(cor);
+                            desfazMovimento(origem, destino, capturada);
+                            if (!testeXeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true; // está em xeque
         }
         public void ColocarNovaPeca(char coluna, int linha, Peca peca)
         {
@@ -84,8 +116,16 @@ namespace Xadrez
             {
                 xeque = false;
             }
-            Turno++;
-            MudaJogador();
+            if (testeXequemate(adversaria(JogadorAtual)))
+            {
+                terminada = true;
+            }
+            else
+            {
+                Turno++;
+                MudaJogador();
+            }
+
         }
         public void MudaJogador()
         {
