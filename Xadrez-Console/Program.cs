@@ -38,6 +38,11 @@ namespace Xadrez_Console
                         Console.ReadLine();
                         
                     }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
                 Console.Clear();
                 Tela.imprimirPartida(partida);
