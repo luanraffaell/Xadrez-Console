@@ -236,7 +236,7 @@ namespace Xadrez
                 Turno++;
                 MudaJogador();
             }
-            Peca p = tab.peca(destino);
+            
 
             //#jogada especial en passant
             if(p is Peao && (destino.Linha == origem.Linha -2 || destino.Linha == origem.Linha + 2))
