@@ -203,6 +203,22 @@ namespace Xadrez
                 desfazMovimento(origem, destino, capturada);
                 throw new TabuleiroException("Voçê não pode se colocar em cheque");
             }
+            Peca p = tab.peca(destino);
+
+            //jogada especial PROMOCAO
+            if(p is Peao)
+            {
+                if(p.cor == Cor.Branca && destino.Linha == 0 || p.cor == Cor.Preta && destino.Linha == 7)
+                {
+                    p = tab.RemoverPeca(destino);
+                    pecas.Remove(p);
+                    Peca dama = new Dama(tab, p.cor);
+                    tab.ColocarPeca(dama, destino);
+                    pecas.Add(dama);
+                }
+            }
+
+
             if (estaEmCheque(adversaria(JogadorAtual)))
             {
                 xeque = true;
